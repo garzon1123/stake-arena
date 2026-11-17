@@ -1,6 +1,6 @@
 # Devpost Submission (copy-paste ready)
 
-> Fill the four `⟨…⟩` slots before submitting: team members, GitHub URL, video URL, live demo URL (or "Run locally — see README").
+> Fill the three `⟨…⟩` slots before submitting: team members, video URL, live demo URL (or "Run locally — see README").
 
 **Devpost selections**
 - Main track: **Consumer Applications**
@@ -19,7 +19,7 @@ Prove your skill. Own your victory.
 ⟨names⟩
 
 ## Links
-- GitHub: ⟨https://github.com/garzon1123/stake-arena⟩
+- GitHub: https://github.com/garzon1123/stake-arena
 - Demo video (YouTube or Google Drive, 2:13): ⟨link⟩
 - Live demo: ⟨link, or "Runs locally with one command: `npm run demo`. See README"⟩
 - Solana program: `stake_arena`, verified on a **local Solana validator**. Program ID `4CGHpkEjVe6PAZC5V2cpNH2u1kakXQUxru4CSpnarCZL` is reserved; **public devnet deployment is pending** (see "Challenges").
