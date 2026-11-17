@@ -1,0 +1,853 @@
+{
+  "address": "4CGHpkEjVe6PAZC5V2cpNH2u1kakXQUxru4CSpnarCZL",
+  "metadata": {
+    "name": "stake_arena",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "STAKE Arena match escrow (devnet test tokens only)"
+  },
+  "instructions": [
+    {
+      "name": "cancel_unfunded",
+      "discriminator": [
+        7,
+        11,
+        92,
+        226,
+        201,
+        56,
+        156,
+        158
+      ],
+      "accounts": [
+        {
+          "name": "caller",
+          "docs": [
+            "Adjudicator for `settle`; any signer for the time-gated recovery paths."
+          ],
+          "signer": true
+        },
+        {
+          "name": "escrow",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  116,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "escrow.match_id",
+                "account": "MatchEscrow"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "escrow"
+              }
+            ]
+          },
+          "relations": [
+            "escrow"
+          ]
+        },
+        {
+          "name": "mint",
+          "relations": [
+            "escrow"
+          ]
+        },
+        {
+          "name": "player_one_token",
+          "writable": true
+        },
+        {
+          "name": "player_two_token",
+          "writable": true
+        },
+        {
+          "name": "creator",
+          "writable": true,
+          "relations": [
+            "escrow"
+          ]
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "create_match",
+      "discriminator": [
+        107,
+        2,
+        184,
+        145,
+        70,
+        142,
+        17,
+        165
+      ],
+      "accounts": [
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "adjudicator",
+          "docs": [
+            "The adjudicator must co-sign so a match can never be bound to an unwilling key."
+          ],
+          "signer": true
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "escrow",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  116,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "args.match_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "escrow"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "CreateMatchArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "deposit",
+      "discriminator": [
+        242,
+        35,
+        198,
+        137,
+        82,
+        225,
+        242,
+        182
+      ],
+      "accounts": [
+        {
+          "name": "player",
+          "signer": true
+        },
+        {
+          "name": "escrow",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  116,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "escrow.match_id",
+                "account": "MatchEscrow"
+              }
+            ]
+          }
+        },
+        {
+          "name": "player_token",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "escrow"
+              }
+            ]
+          },
+          "relations": [
+            "escrow"
+          ]
+        },
+        {
+          "name": "mint",
+          "relations": [
+            "escrow"
+          ]
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "refund_unresolved",
+      "discriminator": [
+        56,
+        118,
+        112,
+        137,
+        210,
+        53,
+        237,
+        226
+      ],
+      "accounts": [
+        {
+          "name": "caller",
+          "docs": [
+            "Adjudicator for `settle`; any signer for the time-gated recovery paths."
+          ],
+          "signer": true
+        },
+        {
+          "name": "escrow",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  116,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "escrow.match_id",
+                "account": "MatchEscrow"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "escrow"
+              }
+            ]
+          },
+          "relations": [
+            "escrow"
+          ]
+        },
+        {
+          "name": "mint",
+          "relations": [
+            "escrow"
+          ]
+        },
+        {
+          "name": "player_one_token",
+          "writable": true
+        },
+        {
+          "name": "player_two_token",
+          "writable": true
+        },
+        {
+          "name": "creator",
+          "writable": true,
+          "relations": [
+            "escrow"
+          ]
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "settle",
+      "discriminator": [
+        175,
+        42,
+        185,
+        87,
+        144,
+        131,
+        102,
+        212
+      ],
+      "accounts": [
+        {
+          "name": "caller",
+          "docs": [
+            "Adjudicator for `settle`; any signer for the time-gated recovery paths."
+          ],
+          "signer": true
+        },
+        {
+          "name": "escrow",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  116,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "escrow.match_id",
+                "account": "MatchEscrow"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "escrow"
+              }
+            ]
+          },
+          "relations": [
+            "escrow"
+          ]
+        },
+        {
+          "name": "mint",
+          "relations": [
+            "escrow"
+          ]
+        },
+        {
+          "name": "player_one_token",
+          "writable": true
+        },
+        {
+          "name": "player_two_token",
+          "writable": true
+        },
+        {
+          "name": "creator",
+          "writable": true,
+          "relations": [
+            "escrow"
+          ]
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "outcome",
+          "type": "u8"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "MatchEscrow",
+      "discriminator": [
+        41,
+        253,
+        245,
+        149,
+        7,
+        243,
+        203,
+        139
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "MatchClosed",
+      "discriminator": [
+        230,
+        66,
+        193,
+        250,
+        30,
+        97,
+        94,
+        247
+      ]
+    },
+    {
+      "name": "MatchCreated",
+      "discriminator": [
+        151,
+        176,
+        11,
+        24,
+        34,
+        225,
+        227,
+        16
+      ]
+    },
+    {
+      "name": "StakeDeposited",
+      "discriminator": [
+        69,
+        152,
+        144,
+        109,
+        232,
+        34,
+        225,
+        19
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "SamePlayer",
+      "msg": "Players must be two distinct wallets"
+    },
+    {
+      "code": 6001,
+      "name": "AdjudicatorIsPlayer",
+      "msg": "The adjudicator cannot be a player in the match"
+    },
+    {
+      "code": 6002,
+      "name": "ZeroStake",
+      "msg": "Stake must be greater than zero"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidWindow",
+      "msg": "Window is outside the allowed range"
+    },
+    {
+      "code": 6004,
+      "name": "NotAPlayer",
+      "msg": "Signer is not a player in this match"
+    },
+    {
+      "code": 6005,
+      "name": "AlreadyDeposited",
+      "msg": "This player has already deposited"
+    },
+    {
+      "code": 6006,
+      "name": "NotAcceptingDeposits",
+      "msg": "The match is not accepting deposits"
+    },
+    {
+      "code": 6007,
+      "name": "FundingExpired",
+      "msg": "The funding deadline has passed"
+    },
+    {
+      "code": 6008,
+      "name": "NotFunded",
+      "msg": "The match is not fully funded"
+    },
+    {
+      "code": 6009,
+      "name": "InvalidOutcome",
+      "msg": "Invalid outcome"
+    },
+    {
+      "code": 6010,
+      "name": "TooEarly",
+      "msg": "Only the adjudicator can do this before the deadline"
+    },
+    {
+      "code": 6011,
+      "name": "Unauthorized",
+      "msg": "Signer is not the match adjudicator"
+    },
+    {
+      "code": 6012,
+      "name": "Overflow",
+      "msg": "Arithmetic overflow"
+    }
+  ],
+  "types": [
+    {
+      "name": "CreateMatchArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "match_id",
+            "type": {
+              "array": [
+                "u8",
+                16
+              ]
+            }
+          },
+          {
+            "name": "player_one",
+            "type": "pubkey"
+          },
+          {
+            "name": "player_two",
+            "type": "pubkey"
+          },
+          {
+            "name": "stake",
+            "type": "u64"
+          },
+          {
+            "name": "funding_window_secs",
+            "type": "i64"
+          },
+          {
+            "name": "resolution_window_secs",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MatchClosed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "escrow",
+            "type": "pubkey"
+          },
+          {
+            "name": "state",
+            "type": {
+              "defined": {
+                "name": "MatchState"
+              }
+            }
+          },
+          {
+            "name": "outcome",
+            "type": "u8"
+          },
+          {
+            "name": "player_one_amount",
+            "type": "u64"
+          },
+          {
+            "name": "player_two_amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MatchCreated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "escrow",
+            "type": "pubkey"
+          },
+          {
+            "name": "match_id",
+            "type": {
+              "array": [
+                "u8",
+                16
+              ]
+            }
+          },
+          {
+            "name": "player_one",
+            "type": "pubkey"
+          },
+          {
+            "name": "player_two",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "stake",
+            "type": "u64"
+          },
+          {
+            "name": "funding_deadline",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MatchEscrow",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "match_id",
+            "docs": [
+              "Off-chain match UUID (16 bytes). Also the PDA seed, so ids can never be reused."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                16
+              ]
+            }
+          },
+          {
+            "name": "creator",
+            "docs": [
+              "Paid rent for the escrow + vault; receives the vault's rent when it is closed."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "adjudicator",
+            "docs": [
+              "The only key allowed to attest a result."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "player_one",
+            "type": "pubkey"
+          },
+          {
+            "name": "player_two",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "vault",
+            "type": "pubkey"
+          },
+          {
+            "name": "stake",
+            "docs": [
+              "Stake per player, in mint base units."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "funding_deadline",
+            "type": "i64"
+          },
+          {
+            "name": "resolution_window",
+            "type": "i64"
+          },
+          {
+            "name": "funded_at",
+            "type": "i64"
+          },
+          {
+            "name": "player_one_deposited",
+            "type": "bool"
+          },
+          {
+            "name": "player_two_deposited",
+            "type": "bool"
+          },
+          {
+            "name": "state",
+            "type": {
+              "defined": {
+                "name": "MatchState"
+              }
+            }
+          },
+          {
+            "name": "outcome",
+            "type": "u8"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "vault_bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MatchState",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "AwaitingDeposits"
+          },
+          {
+            "name": "Funded"
+          },
+          {
+            "name": "Settled"
+          },
+          {
+            "name": "Cancelled"
+          },
+          {
+            "name": "Refunded"
+          }
+        ]
+      }
+    },
+    {
+      "name": "StakeDeposited",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "escrow",
+            "type": "pubkey"
+          },
+          {
+            "name": "player",
+            "type": "pubkey"
+          },
+          {
+            "name": "fully_funded",
+            "type": "bool"
+          }
+        ]
+      }
+    }
+  ]
+}

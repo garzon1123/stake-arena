@@ -1,0 +1,36 @@
+{
+  "name": "stake-arena",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "npm run dev --workspace @stake-arena/server & npm run dev --workspace @stake-arena/web",
+    "dev:server": "npm run dev --workspace @stake-arena/server",
+    "dev:web": "npm run dev --workspace @stake-arena/web",
+    "build": "npm run build --workspace @stake-arena/shared && npm run build --workspace @stake-arena/web && npm run build --workspace @stake-arena/server",
+    "start": "npm run start --workspace @stake-arena/server",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "db:generate": "npm run db:generate --workspace @stake-arena/server",
+    "db:migrate": "npm run db:migrate --workspace @stake-arena/server",
+    "e2e": "playwright test",
+    "keys:generate": "bash scripts/generate-keys.sh",
+    "program:build": "anchor build",
+    "program:test": "anchor build && cargo test -p stake_arena",
+    "chain:localnet": "bash scripts/localnet.sh",
+    "chain:setup": "tsx scripts/setup-chain.ts",
+    "deploy:devnet": "bash scripts/deploy-devnet.sh",
+    "test:localnet": "LOCALNET=1 npm run test --workspace @stake-arena/server"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "tsx": "^4.23.15"
+  }
+}
