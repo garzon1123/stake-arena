@@ -1,0 +1,31 @@
+# Render Blueprint: one always-on Docker web service. Secrets are entered in the dashboard (sync: false).
+services:
+  - type: web
+    name: stake-arena
+    runtime: docker
+    plan: starter
+    healthCheckPath: /api/health
+    numInstances: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SOLANA_CLUSTER
+        value: devnet
+      - key: PROGRAM_ID
+        value: 4CGHpkEjVe6PAZC5V2cpNH2u1kakXQUxru4CSpnarCZL
+      - key: VITE_SOLANA_CHAIN
+        value: solana:devnet
+      - key: WEB_ORIGIN
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: SOLANA_RPC_URL
+        sync: false
+      - key: SOLANA_WS_URL
+        sync: false
+      - key: TEST_MINT
+        sync: false
+      - key: ADJUDICATOR_KEYPAIR
+        sync: false
+      - key: MINT_AUTHORITY_KEYPAIR
+        sync: false

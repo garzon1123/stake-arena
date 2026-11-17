@@ -67,6 +67,12 @@ test('two players stake, play and settle onchain', async ({ browser }) => {
   await expect(white.getByText('Your move')).toBeVisible();
   await move(white, 'g2', 'g4');
   await expect(black.getByText('Your move')).toBeVisible();
+
+  // Reconnection: black refreshes mid-game and resumes the same position and turn.
+  await black.reload();
+  await expect(black.getByText('Your move')).toBeVisible();
+  await expect(black.getByLabel('Move history')).toContainText('g4');
+  await expect(black.locator('[data-square="g4"] [data-piece="wP"]')).toBeVisible();
   if (shots) await black.screenshot({ path: `${shots}/game.png` });
   await move(black, 'd8', 'h4');
 
