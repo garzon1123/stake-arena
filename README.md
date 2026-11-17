@@ -8,7 +8,29 @@ Skill-matched, real-time blitz chess. Each player's test-token stake is locked i
 
 UBC Hackathon 2026 · **Track:** Consumer Applications · **Chain award:** Best use of Solana · **Bounties:** none
 
-📹 Demo video: _TBD_ · 🌐 Live demo: _TBD_
+📹 **Demo video:** [`deliverables/stake-arena-demo.mp4`](deliverables/stake-arena-demo.mp4) (2:13, real two-player match on a local Solana validator) · public link: _add YouTube/Drive URL_
+🚀 **Run it:** `npm install && npm run demo` → http://localhost:5173
+
+![STAKE Arena landing page](docs/screenshots/landing.png)
+
+## Status: what is verified
+
+| | Status |
+|---|---|
+| Two separate wallets → sign-in → faucet → matchmaking → escrow deposits → live chess → checkmate → **onchain payout** → Elo/stats | ✅ **Verified on a local Solana validator** running the `stake_arena` program (automated tests and the recorded demo) |
+| Underfunded match → cancelled → deposit refunded onchain | ✅ Verified on the local validator |
+| Mid-game refresh / reconnect resumes the same game | ✅ Verified (browser test) |
+| **Public Solana devnet deployment** | ⛔ **Not yet verified.** Public faucets were rate-limited or ineligible for our accounts, so the program ID below is *reserved*, not deployed |
+| Public hosted web demo | ⛔ Not provisioned (see [`docs/deployment.md`](docs/deployment.md)) |
+| Browser-extension wallets (Phantom/Solflare) | ⚠️ Implemented via the Wallet Standard, not yet tested by us; the built-in demo wallet is tested |
+
+| Funding | Live game | Settled onchain |
+|---|---|---|
+| ![funding](docs/screenshots/funding.png) | ![game](docs/screenshots/game.png) | ![result](docs/screenshots/result.png) |
+
+| Real settlement transaction (localnet) | Leaderboard | Mobile |
+|---|---|---|
+| ![proof](docs/screenshots/settlement-proof.png) | ![leaderboard](docs/screenshots/leaderboard.png) | ![mobile](docs/screenshots/mobile.png) |
 
 ---
 
@@ -43,9 +65,10 @@ Settlement is the product, so it has to be cheap, fast and verifiable:
 
 | Item | Address |
 |---|---|
-| `stake_arena` program | `4CGHpkEjVe6PAZC5V2cpNH2u1kakXQUxru4CSpnarCZL` — **devnet deployment pending** ([status](#devnet-deployment)) |
-| TEST mint (devnet) | _created by `npm run deploy:devnet`; fill in_ |
+| `stake_arena` program | `4CGHpkEjVe6PAZC5V2cpNH2u1kakXQUxru4CSpnarCZL`. Verified on a **local validator** (preloaded at this ID). **Not deployed to devnet yet**; [status](#devnet-deployment) |
+| TEST mint | Created fresh on each local validator run by `npm run demo` / `chain:setup` (devnet mint: pending) |
 | Adjudicator / fee payer | `8ytvgotQDBPgAoqUrBxasfAE3VBu7kHxDSGdHSPsG4RB` |
+| Example localnet settlement | `36Zju5Ef…9ddGihQ` (slot 6011): see [`deliverables/settlement-proof.json`](deliverables/settlement-proof.json) |
 
 Only verified addresses go in this table. Explorer: `https://explorer.solana.com/address/<id>?cluster=devnet`.
 
@@ -133,6 +156,16 @@ npm run db:migrate
 npm run dev:server                              # terminal 2: http://localhost:8787
 npm run dev:web                                 # terminal 3: http://localhost:5173
 ```
+
+### One-command demo (local validator)
+
+After the prerequisites and `npm install`:
+
+```bash
+npm run demo
+```
+
+This starts a local validator with the program preloaded, creates a fresh TEST mint, migrates the DB, and runs the API (:8787) and web (:5173). Ctrl+C stops everything. To re-record the demo video: `npm run demo:record`.
 
 ### Two-player demo
 

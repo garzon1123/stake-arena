@@ -27,7 +27,9 @@
     "chain:localnet": "bash scripts/localnet.sh",
     "chain:setup": "tsx scripts/setup-chain.ts",
     "deploy:devnet": "bash scripts/deploy-devnet.sh",
-    "test:localnet": "LOCALNET=1 npm run test --workspace @stake-arena/server"
+    "test:localnet": "LOCALNET=1 npm run test --workspace @stake-arena/server",
+    "demo": "bash scripts/demo-up.sh",
+    "demo:record": "DEMO_OUT=$PWD/deliverables/raw playwright test -c scripts/demo/record.config.ts && tsx scripts/demo/proof.ts deliverables/raw && tsx scripts/demo/compose.ts deliverables/raw"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.1",

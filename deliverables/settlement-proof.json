@@ -1,0 +1,38 @@
+{
+  "matchId": "c2270bb0-5fee-4648-94f4-49f4b9a89b99",
+  "signature": "36Zju5EfZYvGnHhhfVhJ1A2SLR4KS5MmajzYKqzPY44a6mnghSKuyjwJFAzwcwGKBDcji33gdj1nbEJSD9ddGihQ",
+  "slot": 6011,
+  "programId": "4CGHpkEjVe6PAZC5V2cpNH2u1kakXQUxru4CSpnarCZL",
+  "tokenChanges": [
+    {
+      "label": "magnus_rha",
+      "account": "6fGkkeUsbF4uWsKzN3y3MMNH9gEHB3d7sYcgdKyNSQP4",
+      "before": "90",
+      "after": "110"
+    },
+    {
+      "label": "judit_rha",
+      "account": "DAPwmRTSyPDgeaPTKJjiQgdTrN4nnsyJeJR7XMtwTRuM",
+      "before": "90",
+      "after": "90"
+    },
+    {
+      "label": "Escrow vault (PDA)",
+      "account": "FwKahAsSc39thZ87huR4HzHyxnWGYgiW3TtiMXgG8rRk",
+      "before": "20",
+      "after": "closed"
+    }
+  ],
+  "logs": [
+    "Program 4CGH…rCZL invoke [1]",
+    "Program log: Instruction: Settle",
+    "Program Toke…Q5DA invoke [2]",
+    "Program Toke…Q5DA consumed 105 of 187379 compute units",
+    "Program Toke…Q5DA success",
+    "Program Toke…Q5DA invoke [2]",
+    "Program Toke…Q5DA consumed 118 of 185560 compute units",
+    "Program Toke…Q5DA success",
+    "Program 4CGH…rCZL consumed 16140 of 200000 compute units",
+    "Program 4CGH…rCZL success"
+  ]
+}

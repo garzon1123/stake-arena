@@ -13,3 +13,5 @@ keys/*.json
 .pglite
 playwright-report
 test-results
+deliverables/raw/
+deliverables/build/
