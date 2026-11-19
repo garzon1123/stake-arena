@@ -26,11 +26,11 @@ Prove your skill. Own your victory.
 
 ---
 
-## Inspiration / Problem
+## Inspiration / What problem does it solve?
 
 Competitive players love having something on the line. A friendly match with stakes, though, means trusting a stranger to pay, arguing over self-reported results, and juggling separate apps for finding an opponent, playing, and settling up. Skill matching, result verification and payment are three disconnected, trust-heavy processes, and a player's record rarely follows them.
 
-## What it does
+## What did you build?
 
 STAKE Arena is a competitive chess app where the crypto stays in the background:
 
@@ -41,6 +41,16 @@ STAKE Arena is a competitive chess app where the crypto stays in the background:
 5. **Fund the match.** Each player approves one deposit into a vault owned by our Solana program, not by us and not by the opponent.
 6. **Play live blitz chess.** Moves and clocks are validated by the server and synced in real time.
 7. **Get paid automatically.** The server derives the result from the game itself, the program sends the full pot to the winner (a draw refunds both), and ratings, stats, match history and the leaderboard update.
+
+## What makes it unique
+
+The combination, not any single piece:
+
+- **Consumer-grade game UX.** Crypto stays in the background: no SOL needed, a one-click demo wallet, plain-language wallet prompts.
+- **Skill-aware matchmaking.** Players are paired by stake tier, time control and Elo.
+- **Native result verification.** We host the game, so the result comes from the actual moves and clocks, not from what players report.
+- **Noncustodial escrow with programmable settlement.** A Solana program holds the stakes and can only pay the two players. Every payout can be checked onchain.
+- **Game-agnostic settlement layer.** Chess is the first game; any game with a verifiable result can plug into the same escrow.
 
 ## How we built it
 
@@ -84,7 +94,7 @@ The money logic is the program, not our server. Because the vault is owned by a 
 
 Product trust comes from making the dangerous parts boring: program-owned custody, explicit timeouts, idempotent settlement, and saying clearly what is and isn't trustless.
 
-## What's next for STAKE Arena
+## What would you build next?
 
 - Public **devnet deployment** and hosted demo
 - **Fair-play analysis** (engine-assistance detection) and move transcripts countersigned by both players

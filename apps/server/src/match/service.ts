@@ -166,8 +166,12 @@ export class MatchService {
         .update(t.escrowTransactions)
         .set({ status: 'confirmed', confirmedAt: new Date(this.now()) })
         .where(and(eq(t.escrowTransactions.matchId, m.id), eq(t.escrowTransactions.kind, 'create')));
+      // The onchain deadline is in chain time; the server and UI work in wall-clock time.
+      // Translate using the chain's current clock so validator drift can't shrink the window.
+      const chainNow = await this.chain.chainTime().catch(() => new Date(this.now()));
+      const remainingMs = escrow.fundingDeadline.getTime() - chainNow.getTime();
       await this.transition(this.db, m.id, 'CREATED', 'AWAITING_DEPOSITS', {
-        fundingDeadline: escrow.fundingDeadline,
+        fundingDeadline: new Date(this.now() + Math.max(0, remainingMs)),
       });
       await this.audit('escrow.created', { matchId: m.id });
     } else {

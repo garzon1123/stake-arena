@@ -81,6 +81,8 @@ export interface ChainService {
     onSignature: (sig: string) => Promise<void>,
   ): Promise<string>;
   fetchEscrow(matchId: string): Promise<EscrowState | null>;
+  /** The cluster's current unix time (validator clocks can drift from wall-clock time). */
+  chainTime(): Promise<Date>;
   prepareDeposit(matchId: string, player: string): Promise<PreparedDeposit>;
   submitDeposit(
     signedTxBase64: string,
@@ -198,6 +200,12 @@ export async function createSolanaChain(config: Config): Promise<ChainService> {
         resolutionWindowSecs: ESCROW.resolutionWindowSecs,
       });
       return sendWithSigners([ix], onSignature);
+    },
+
+    async chainTime() {
+      const slot = await rpc.getSlot({ commitment: 'confirmed' }).send();
+      const t = await rpc.getBlockTime(slot).send();
+      return t === null ? new Date() : new Date(Number(t) * 1000);
     },
 
     async fetchEscrow(matchId) {
